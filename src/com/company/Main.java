@@ -2,10 +2,14 @@ package com.company;
 
 
 import java.util.Scanner;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 public class Main implements MyFunction {
 
     private static Scanner input;
+    private static boolean praedikat = false;
+    private static int zahl;
 
 
     /**
@@ -95,14 +99,18 @@ public class Main implements MyFunction {
 
     @Override
     public int apply(int i) {
-        int funktion = i;
-        System.out.println("Geben Sie den Startwert ein: ");
-        i = input.nextInt();
-        input.nextLine();
-        System.out.println("Geben Sie den Endwert ein: ");
-        int j = input.nextInt();
-        input.nextLine();
-        return applyAndPrint(i, j, funktion);
+        if(praedikat = false) {
+            int funktion = i;
+            System.out.println("Geben Sie den Startwert ein: ");
+            i = input.nextInt();
+            input.nextLine();
+            System.out.println("Geben Sie den Endwert ein: ");
+            int j = input.nextInt();
+            input.nextLine();
+            return applyAndPrint(i, j, funktion);
+        }else{
+            return applyAndPrint(zahl, zahl, i);
+        }
     }
 
     /**
@@ -143,9 +151,45 @@ public class Main implements MyFunction {
         System.out.println("\nLambda Ausdrücke"+ "\n11: x^2\n21: x!\n31:x^(x+1)\n41:fib(x)");
         System.out.println("\nStatic Nested Class"+ "\n32: x!");
         System.out.println("\nTop Level Class"+ "\n33: x!");
+        System.out.println("\n99: Prädikate benutzen");
         int i = input.nextInt();
         input.nextLine();
-        System.out.println(main.apply(i));
+        if(i == 99){
+            praedikat = true;
+            System.out.println("\n1: even\n2: odd");
+            int praedikat = input.nextInt();
+            input.nextLine();
+            if(praedikat == 1){
+                System.out.println("Bitte geben Sie die zu testende Zahl ein:");
+                zahl = input.nextInt();
+                input.nextLine();
+                IntPredicate even = test -> {return zahl%2==0;};
+                System.out.println("Geben Sie die Funktion ein:" + "\nAnonyme Klassen"+ "\n1: x^2\n2: x!\n3:x^(x+1)\n4:fib(x)");
+                System.out.println("\nLambda Ausdrücke"+ "\n11: x^2\n21: x!\n31:x^(x+1)\n41:fib(x)");
+                System.out.println("\nStatic Nested Class"+ "\n32: x!");
+                System.out.println("\nTop Level Class"+ "\n33: x!");
+                int funktion = input.nextInt();
+                input.nextLine();
+                System.out.println(main.conditionateInput(even, funktion));
+
+            } else if(praedikat == 2){
+                System.out.println("Bitte geben Sie die zu testende Zahl ein:");
+                int zahl = input.nextInt();
+                input.nextLine();
+                IntPredicate odd = test -> {return zahl%2==1;};
+                System.out.println("Geben Sie die Funktion ein:" + "\nAnonyme Klassen"+ "\n1: x^2\n2: x!\n3:x^(x+1)\n4:fib(x)");
+                System.out.println("\nLambda Ausdrücke"+ "\n11: x^2\n21: x!\n31:x^(x+1)\n41:fib(x)");
+                System.out.println("\nStatic Nested Class"+ "\n32: x!");
+                System.out.println("\nTop Level Class"+ "\n33: x!");
+                int funktion = input.nextInt();
+                input.nextLine();
+                System.out.println(main.conditionateInput(odd, funktion));
+
+            }
+        } else {
+
+            System.out.println(main.apply(i));
+        }
         input.close();
     }
 
