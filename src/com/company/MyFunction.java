@@ -1,12 +1,16 @@
 package com.company;
 
 import java.util.function.IntPredicate;
-import java.util.function.Predicate;
 
 public interface MyFunction {
     int apply(int i);
 
-    default int conditionateInput (IntPredicate praedikat, int i){
-        return praedikat.test(i) ? apply(i) : 0;
+    //Lamda = implemeniterun eines funktionalen interfaces, d.h wir benötigen ein Objekt MyFunction
+    default MyFunction conditionateInput (IntPredicate preadikat){
+        return funktion-> preadikat.test(funktion) ? apply (funktion) : 0;
+    }
+
+    default MyFunction conditionateOutput(IntPredicate preadikat){
+        return funktion-> preadikat.test(apply(funktion)) ? apply(funktion) : 0;
     }
 }
